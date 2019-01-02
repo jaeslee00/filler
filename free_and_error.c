@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/25 15:56:33 by jaelee            #+#    #+#             */
-/*   Updated: 2018/12/29 05:34:41 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/01 23:28:28 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ void	free_map(t_filler *pc)
 		index++;
 	}
 	free(pc->map);
+}
+
+void	free_nmap(t_filler *pc)
+{
+	int	index;
+
+	index = 0;
+	while (index < pc->map_h)
+	{
+		free(pc->nmap[index]);
+		index++;
+	}
+	free(pc->nmap);
 }
 
 void	free_piece(t_filler *pc)
@@ -45,7 +58,9 @@ void	error(t_filler *pc)
 		free_map(pc);
 	if (pc->piece != NULL)
 		free_piece(pc);
-	write(1, "ERROR\n", 6);
+	if (pc->nmap != NULL)
+		free_nmap(pc);
+//	write(1, "ERROR\n", 6);
 	exit(EXIT_FAILURE);
 }
 
@@ -55,4 +70,6 @@ void	free_struct(t_filler *pc)
 		free_map(pc);
 	if (pc->piece != NULL)
 		free_piece(pc);
+	if (pc->nmap != NULL)
+		free_nmap(pc);
 }

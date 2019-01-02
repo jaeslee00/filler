@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 09:52:27 by jaelee            #+#    #+#             */
-/*   Updated: 2018/12/30 00:16:20 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/01 21:27:53 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int		filler(t_filler *pc)
 	int	x;
 	int	y;
 
+	pc->sum = INT_MAX;
 	y = 0;
 	while (y + pc->pc_h <= pc->map_h)
 	{
