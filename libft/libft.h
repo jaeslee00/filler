@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 11:07:06 by jaelee            #+#    #+#             */
-/*   Updated: 2018/12/26 07:11:28 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 21:06:05 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# define FD_NBR 1
-# define BUFF_SIZE 100
+# define BUFF_SIZE 1024
 
 typedef struct	s_list
 {
@@ -24,6 +23,14 @@ typedef struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct	s_fd_buff
+{
+	int				fd;
+	unsigned int	pos;
+	ssize_t			n;
+	char			*buff;
+}				t_fd_buff;
 
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);

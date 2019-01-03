@@ -3,66 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ryaoi <ryaoi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 17:59:26 by jaelee            #+#    #+#             */
-/*   Updated: 2018/12/26 07:50:25 by jaelee           ###   ########.fr       */
+/*   Created: 2016/11/17 13:44:47 by ryaoi             #+#    #+#             */
+/*   Updated: 2019/01/03 17:36:35 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_process_line(int fd, char **str, char **line)
+static void			add_chunk(char **line, char *buff, size_t size)
 {
-	int		i;
-	char	*tmp;
+	char			*tmp;
+	char			*ptr_tmp;
 
-	i = 0;
-	while (str[fd][i] != '\n' && str[fd][i] != '\0')
-		i++;
-	if (str[fd][i] == '\n')
-	{
-		if (!(*line = ft_strsub(str[fd], 0, i)))
-			return (0);
-		if (!(tmp = ft_strdup(str[fd] + i + 1)))
-			return (0);
-		ft_strdel(&str[fd]);
-		str[fd] = tmp;
-		if (str[fd][0] == '\0')
-			ft_strdel(&str[fd]);
-	}
-	else if (str[fd][i] == '\0')
-	{
-		if (!(*line = ft_strdup(str[fd])))
-			return (0);
-		ft_strdel(&str[fd]);
-	}
-	return (1);
+	if (*line == NULL)
+		*line = ft_strnew(1);
+	tmp = ft_strsub(buff, 0, size);
+	ptr_tmp = *line;
+	*line = ft_strjoin(*line, tmp);
+	free(ptr_tmp);
+	free(tmp);
 }
 
-int				get_next_line(const int fd, char **line)
+static void			parse(const int fd, char **line, t_fd_buff *fd_buff)
 {
-	int			ret;
-	static char	*str[FD_NBR];
-	char		*tmp;
-	char		buff[BUFF_SIZE + 1];
+	unsigned int	begin_pos;
 
-	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	begin_pos = fd_buff->pos;
+	while (fd_buff->buff[fd_buff->pos] != '\n' && fd_buff->n != 0)
 	{
-		buff[ret] = '\0';
-		if (str[fd] == NULL)
-			if (!(str[fd] = ft_strnew(0)))
-				return (0);
-		if (!(tmp = ft_strjoin(str[fd], buff)))
-			return (0);
-		ft_strdel(&str[fd]);
-		str[fd] = tmp;
-		if (ft_strchr(str[fd], '\n'))
-			break ;
+		if (--(fd_buff->n) == 0)
+		{
+			add_chunk(line, fd_buff->buff + begin_pos,
+						fd_buff->pos - begin_pos + 1);
+			fd_buff->pos = 0;
+			begin_pos = fd_buff->pos;
+			fd_buff->n = read(fd, fd_buff->buff, BUFF_SIZE);
+		}
+		else
+			(fd_buff->pos)++;
 	}
-	if (ret < 0)
+	if (fd_buff->n != 0)
+	{
+		add_chunk(line, fd_buff->buff + begin_pos, fd_buff->pos - begin_pos);
+		--(fd_buff->n);
+		++(fd_buff->pos);
+	}
+}
+
+static t_fd_buff	*find_fd_buff(t_list *lst, int fd)
+{
+	while (lst != NULL)
+	{
+		if (((t_fd_buff *)lst->content)->fd == fd)
+			return (lst->content);
+		lst = lst->next;
+	}
+	return (NULL);
+}
+
+static t_fd_buff	*select_fd_buff(t_list **lst, int fd)
+{
+	t_fd_buff		*new_fd_buff;
+	t_fd_buff		*ptr;
+	t_list			*new_lst;
+
+	if ((ptr = find_fd_buff(*lst, fd)) != NULL)
+		return (ptr);
+	if ((new_fd_buff = (t_fd_buff *)malloc(sizeof(t_fd_buff))) == NULL)
+		return (NULL);
+	new_fd_buff->fd = fd;
+	new_fd_buff->pos = 0;
+	new_fd_buff->n = 0;
+	new_fd_buff->buff = (char *)malloc(sizeof(char) * BUFF_SIZE);
+	if (new_fd_buff->buff == NULL)
+		return (NULL);
+	if ((new_lst = ft_lstnew(new_fd_buff, sizeof(t_list))) == NULL)
+		return (NULL);
+	ft_lstadd(lst, new_lst);
+	free(new_fd_buff);
+	return ((*lst)->content);
+}
+
+int					get_next_line(const int fd, char **line)
+{
+	static t_list	*lst = NULL;
+	t_fd_buff		*fd_buff;
+
+	*line = NULL;
+	fd_buff = select_fd_buff(&lst, fd);
+	if (fd_buff == NULL)
 		return (-1);
-	else if ((str[fd] == NULL || str[fd][0] == '\0') && ret == 0)
-		return (0);
-	return (ft_process_line(fd, str, line));
+	if (fd_buff->n <= 0)
+	{
+		if ((fd_buff->n = read(fd, fd_buff->buff, BUFF_SIZE)) <= 0)
+			return (fd_buff->n);
+		else
+			fd_buff->pos = 0;
+	}
+	parse(fd, line, fd_buff);
+	return (1);
 }

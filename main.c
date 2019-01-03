@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 07:50:42 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/02 05:11:14 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 18:24:16 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_coord(int y, int x)
 int		main(void)
 {
 	t_filler	pc;
-	int			fd;
 	int			success;
 
 	ft_bzero(&pc, sizeof(pc));
@@ -38,14 +37,9 @@ int		main(void)
 		if (success == 1)
 			print_coord(pc.put_y, pc.put_x);
 		else
-			error(&pc);
-//		for (int i=0; i < pc.map_h; i++)
-//		{
-//			for (int j=0; j < pc.map_w; j++)
-//				printf("%2d", pc.nmap[i][j]);
-//			printf("\n");
-//		}
+			break ;
 		free_struct(&pc);
 	}
+	error(&pc);
 	return (0);
 }

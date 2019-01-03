@@ -6,14 +6,14 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 21:23:13 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/02 04:16:56 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 17:11:57 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "filler.h"
 
-static void	init_filler(t_filler *pc)
+void	init_filler(t_filler *pc)
 {
 	pc->pc_h = 0;
 	pc->pc_w = 0;
@@ -25,14 +25,15 @@ static void	init_filler(t_filler *pc)
 	pc->nmap = NULL;
 	pc->piece = NULL;
 }
+
 void	parse_piece(t_filler *pc, char *info, int fd)
 {
 	int			index;
-	char		**temp;
+	char		*temp;
 
-	temp = ft_strsplit(info, ' ');
-	pc->pc_h = ft_atoi(temp[1]);
-	pc->pc_w = ft_atoi(temp[2]);
+	temp = info;
+	pc->pc_h = ft_atoi_ptr(&temp);
+	pc->pc_w = ft_atoi_ptr(&temp);
 	(pc->pc_h > 0 && pc->pc_w > 0) ? 0 : error(pc);
 	index = 0;
 	free(info);
@@ -51,11 +52,11 @@ void	parse_map(t_filler *pc, char *info, int fd)
 {
 	int		index;
 	char	*line;
-	char	**temp;
+	char	*temp;
 
-	temp = ft_strsplit(info, ' ');
-	pc->map_h = ft_atoi(temp[1]);
-	pc->map_w = ft_atoi(temp[2]);
+	temp = info;
+	pc->map_h = ft_atoi_ptr(&temp);
+	pc->map_w = ft_atoi_ptr(&temp);
 	(pc->map_h > 0 && pc->map_w > 0) ? 0 : error(pc);
 	index = 0;
 	free(info);
@@ -99,11 +100,15 @@ void	get_player(t_filler *pc, int fd)
 	{
 		pc->me = 'O';
 		pc->op = 'X';
+		pc->nbr_me = -1;
+		pc->nbr_op = -2;
 	}
 	else if (ft_strstr(line, "p2"))
 	{
 		pc->me = 'X';
 		pc->op = 'O';
+		pc->nbr_me = -2;
+		pc->nbr_op = -1;
 	}
 	free(line);
 }

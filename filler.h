@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 23:03:21 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/01 21:36:14 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 20:59:50 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # include <limits.h>
 # include <stdio.h>
 # define OPEN 0
-# define ME -1
-# define OP -2
+
 typedef struct	s_filler
 {
 	int		pc_h;
@@ -27,12 +26,14 @@ typedef struct	s_filler
 	int		map_w;
 	int		put_y;
 	int		put_x;
-	int		sum; //TODO set sum to INT_MAX
+	int		sum;
 	char	**piece;
 	char	**map;
 	int		**nmap;
 	char	me;
 	char	op;
+	int		nbr_me;
+	int		nbr_op;
 }				t_filler;
 
 void			parse_input(t_filler *pc, int fd);
@@ -48,4 +49,5 @@ void			sum(t_filler *pc, int map_y, int map_x);
 void			check_piece(t_filler *pc, int map_y, int map_x);
 int				filler(t_filler *pc);
 void			create_nmap(t_filler *pc);
+
 #endif

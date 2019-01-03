@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 09:52:27 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/01 21:27:53 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 16:54:18 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	sum(t_filler *pc, int map_y, int map_x)
 		x = 0;
 		while (x < pc->pc_w)
 		{
-			if (pc->piece[y][x] == '*' && pc->nmap[map_y + y][map_x + x] != ME)
+			if (pc->piece[y][x] == '*' &&
+					pc->nmap[map_y + y][map_x + x] != pc->nbr_me)
 				tmp_sum += pc->nmap[map_y + y][map_x + x];
 			x++;
 		}
@@ -55,9 +56,11 @@ void	check_piece(t_filler *pc, int map_y, int map_x)
 		{
 			if (cnt > 1)
 				return ;
-			if (pc->piece[y][x] == '*' && pc->nmap[map_y + y][map_x + x] == ME)
+			if (pc->piece[y][x] == '*' &&
+					pc->nmap[map_y + y][map_x + x] == pc->nbr_me)
 				cnt++;
-			if (pc->piece[y][x] == '*' && pc->nmap[map_y + y][map_x + x] == OP)
+			if (pc->piece[y][x] == '*' &&
+					pc->nmap[map_y + y][map_x + x] == pc->nbr_op)
 				return ;
 			x++;
 		}

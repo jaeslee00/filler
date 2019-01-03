@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/25 15:56:33 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/01 23:28:28 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/03 16:11:22 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	error(t_filler *pc)
 		free_piece(pc);
 	if (pc->nmap != NULL)
 		free_nmap(pc);
-//	write(1, "ERROR\n", 6);
+	ft_putstr("0 0\n");
 	exit(EXIT_FAILURE);
 }
 
