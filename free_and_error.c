@@ -6,14 +6,14 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/25 15:56:33 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/03 16:11:22 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 05:06:30 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 
-void	free_map(t_filler *pc)
+static void	free_map(t_filler *pc)
 {
 	int index;
 
@@ -26,7 +26,7 @@ void	free_map(t_filler *pc)
 	free(pc->map);
 }
 
-void	free_nmap(t_filler *pc)
+static void	free_nmap(t_filler *pc)
 {
 	int	index;
 
@@ -39,7 +39,7 @@ void	free_nmap(t_filler *pc)
 	free(pc->nmap);
 }
 
-void	free_piece(t_filler *pc)
+static void	free_piece(t_filler *pc)
 {
 	int index;
 
@@ -52,7 +52,7 @@ void	free_piece(t_filler *pc)
 	free(pc->piece);
 }
 
-void	error(t_filler *pc)
+void		error(t_filler *pc)
 {
 	if (pc->map != NULL)
 		free_map(pc);
@@ -64,7 +64,7 @@ void	error(t_filler *pc)
 	exit(EXIT_FAILURE);
 }
 
-void	free_struct(t_filler *pc)
+void		free_all(t_filler *pc)
 {
 	if (pc->map != NULL)
 		free_map(pc);

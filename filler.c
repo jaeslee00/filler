@@ -6,14 +6,36 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 09:52:27 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/03 16:54:18 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 05:58:02 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 
-void	sum(t_filler *pc, int map_y, int map_x)
+static void	update_pos(t_filler *pc, int tmp_sum, int map_y, int map_x)
+{
+	if (pc->start_pos == ABOVE)
+	{
+		if (tmp_sum <= pc->sum)
+		{
+			pc->sum = tmp_sum;
+			pc->put_y = map_y;
+			pc->put_x = map_x;
+		}
+	}
+	else
+	{
+		if (tmp_sum < pc->sum)
+		{
+			pc->sum = tmp_sum;
+			pc->put_y = map_y;
+			pc->put_x = map_x;
+		}
+	}
+}
+
+static void	sum(t_filler *pc, int map_y, int map_x)
 {
 	int x;
 	int y;
@@ -33,15 +55,10 @@ void	sum(t_filler *pc, int map_y, int map_x)
 		}
 		y++;
 	}
-	if (tmp_sum < pc->sum)
-	{
-		pc->sum = tmp_sum;
-		pc->put_y = map_y;
-		pc->put_x = map_x;
-	}
+	update_pos(pc, tmp_sum, map_y, map_x);
 }
 
-void	check_piece(t_filler *pc, int map_y, int map_x)
+static void	check_piece(t_filler *pc, int map_y, int map_x)
 {
 	int	x;
 	int	y;
@@ -70,7 +87,7 @@ void	check_piece(t_filler *pc, int map_y, int map_x)
 		sum(pc, map_y, map_x);
 }
 
-int		filler(t_filler *pc)
+int			filler(t_filler *pc)
 {
 	int	x;
 	int	y;

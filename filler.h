@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 23:03:21 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/03 20:59:50 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 06:41:42 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
-# define OPEN 0
+# define OPEN 2147483646
+# define ABOVE 1
+# define BELOW 2
 
 typedef struct	s_filler
 {
@@ -24,6 +26,7 @@ typedef struct	s_filler
 	int		pc_w;
 	int		map_h;
 	int		map_w;
+	int		start_pos;
 	int		put_y;
 	int		put_x;
 	int		sum;
@@ -37,17 +40,11 @@ typedef struct	s_filler
 }				t_filler;
 
 void			parse_input(t_filler *pc, int fd);
-void			parse_map(t_filler *pc, char *info, int fd);
-void			parse_piece(t_filler *pc, char *info, int fd);
-void			get_player(t_filler *pc, int fd);
-void			error(t_filler *pc);
-void			free_struct(t_filler *pc);
-void			process_map(t_filler *pc);
-int				ft_atoi_ptr(char **str);
-void			print_coord(int y, int x);
-void			sum(t_filler *pc, int map_y, int map_x);
-void			check_piece(t_filler *pc, int map_y, int map_x);
-int				filler(t_filler *pc);
 void			create_nmap(t_filler *pc);
+void			process_nmap(t_filler *pc);
+int				filler(t_filler *pc);
+int				ft_atoi_ptr(char **str);
+void			error(t_filler *pc);
+void			free_all(t_filler *pc);
 
 #endif

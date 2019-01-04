@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 09:12:41 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/01 23:10:11 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 06:40:57 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ static void	process_zone(t_filler *pc, int i, int y, int x)
 		pc->nmap[y][x] = i + 1;
 	else if (x - 1 > 0 && y - 1 > 0 && pc->nmap[y - 1][x - 1] == i)
 		pc->nmap[y][x] = i + 1;
-	else if (x + 1 < pc->map_w && x - 1 > 0 && y + 1 < pc->map_h && y - 1 > 0 &&
-			pc->nmap[y][x + 1] == -1 && pc->nmap[y][x - 1] == -1 &&
-			pc->nmap[y + 1][x] == -1 && pc->nmap[y - 1][x] == -1 &&
-			pc->nmap[y + 1][x + 1] == -1 && pc->nmap[y + 1][x - 1] == -1 &&
-			pc->nmap[y - 1][x + 1] == -1 && pc->nmap[y - 1][x - 1] == -1)
-		pc->nmap[y][x] = INT_MAX - 1;
+//	else if (x + 1 < pc->map_w && x - 1 > 0 && y + 1 < pc->map_h && y - 1 > 0 &&
+//			pc->nmap[y][x + 1] == -1 && pc->nmap[y][x - 1] == -1 &&
+//			pc->nmap[y + 1][x] == -1 && pc->nmap[y - 1][x] == -1 &&
+//			pc->nmap[y + 1][x + 1] == -1 && pc->nmap[y + 1][x - 1] == -1 &&
+//			pc->nmap[y - 1][x + 1] == -1 && pc->nmap[y - 1][x - 1] == -1)
+//		pc->nmap[y][x] = INT_MAX - 1;
 }
 
-void		process_map(t_filler *pc)
+void		process_nmap(t_filler *pc)
 {
 	int	i;
 	int	x;

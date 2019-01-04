@@ -6,14 +6,14 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 21:23:13 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/03 17:11:57 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 07:36:35 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "filler.h"
 
-void	init_filler(t_filler *pc)
+static void	init_filler(t_filler *pc)
 {
 	pc->pc_h = 0;
 	pc->pc_w = 0;
@@ -26,7 +26,7 @@ void	init_filler(t_filler *pc)
 	pc->piece = NULL;
 }
 
-void	parse_piece(t_filler *pc, char *info, int fd)
+static void	parse_piece(t_filler *pc, char *info, int fd)
 {
 	int			index;
 	char		*temp;
@@ -43,12 +43,12 @@ void	parse_piece(t_filler *pc, char *info, int fd)
 	{
 		if ((get_next_line(fd, &(pc->piece[index]))) < 1)
 			error(pc);
-		ft_strlen(pc->piece[index]) == pc->pc_w ? 0 : error(pc);
+		pc->pc_w == (int)ft_strlen(pc->piece[index]) ? 0 : error(pc);
 		index++;
 	}
 }
 
-void	parse_map(t_filler *pc, char *info, int fd)
+static void	parse_map(t_filler *pc, char *info, int fd)
 {
 	int		index;
 	char	*line;
@@ -71,13 +71,41 @@ void	parse_map(t_filler *pc, char *info, int fd)
 			error(pc);
 		if (!(pc->map[index] = ft_strdup(line + 4)))
 			error(pc);
-		ft_strlen(pc->map[index]) == pc->map_w ? 0 : error(pc);
+		pc->map_w == (int)ft_strlen(pc->map[index]) ? 0 : error(pc);
 		index++;
 		free(line);
 	}
 }
 
-void	parse_input(t_filler *pc, int fd)
+static void	get_start_pos(t_filler *pc)
+{
+	int	x;
+	int	y;
+	int	y_me;
+	int	y_op;
+
+	y_me = -1;
+	y_op = -1;
+	y = 0;
+	while (y < pc->map_h)
+	{
+		x = 0;
+		while (x < pc->map_w)
+		{
+			if (pc->map[y][x] == pc->me)
+				y_me = y;
+			if (pc->map[y][x] == pc->op)
+				y_op = y;
+			x++;
+		}
+		y++;
+	}
+	if (y_me < 0 || y_op < 0)
+		error(pc);
+	pc->start_pos = (y_me < y_op) ? ABOVE : BELOW;
+}
+
+void		parse_input(t_filler *pc, int fd)
 {
 	char	*line;
 
@@ -85,30 +113,8 @@ void	parse_input(t_filler *pc, int fd)
 	if (get_next_line(fd, &line) < 1)
 		error(pc);
 	parse_map(pc, line, fd);
+	pc->start_pos == 0 ? get_start_pos(pc) : 0;
 	if (get_next_line(fd, &line) < 1)
 		error(pc);
 	parse_piece(pc, line, fd);
-}
-
-void	get_player(t_filler *pc, int fd)
-{
-	char	*line;
-
-	if (get_next_line(fd, &line) < 1)
-		error(pc);
-	if (ft_strstr(line, "p1"))
-	{
-		pc->me = 'O';
-		pc->op = 'X';
-		pc->nbr_me = -1;
-		pc->nbr_op = -2;
-	}
-	else if (ft_strstr(line, "p2"))
-	{
-		pc->me = 'X';
-		pc->op = 'O';
-		pc->nbr_me = -2;
-		pc->nbr_op = -1;
-	}
-	free(line);
 }
