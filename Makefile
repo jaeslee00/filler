@@ -6,7 +6,7 @@
 #    By: jaelee <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 00:44:52 by jaelee            #+#    #+#              #
-#    Updated: 2019/01/04 01:00:29 by jaelee           ###   ########.fr        #
+#    Updated: 2019/01/04 09:54:54 by jaelee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all : $(NAME)
 $(NAME) : $(OBJS) libft/libft.a
 	gcc -Llibft -lft $^ -o $@
 
-$(OBJS) : %.o : %.c
+%.o : %.c
 	gcc $(CFLAGS) $(INCLUDES) -c $^ -o $@
 
 libft/libft.a :
