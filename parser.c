@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 21:23:13 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/04 07:36:35 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 08:46:41 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ static void	init_filler(t_filler *pc)
 
 static void	parse_piece(t_filler *pc, char *info, int fd)
 {
-	int			index;
-	char		*temp;
+	int		index;
+	char	*temp;
+	int		cnt;
 
 	temp = info;
 	pc->pc_h = ft_atoi_ptr(&temp);
 	pc->pc_w = ft_atoi_ptr(&temp);
 	(pc->pc_h > 0 && pc->pc_w > 0) ? 0 : error(pc);
-	index = 0;
 	free(info);
+	index = 0;
+	cnt = 0;
 	if (!(pc->piece = ft_memalloc(sizeof(char*) * (pc->pc_h + 1))))
 		error(pc);
 	while (index < pc->pc_h)
@@ -44,8 +46,11 @@ static void	parse_piece(t_filler *pc, char *info, int fd)
 		if ((get_next_line(fd, &(pc->piece[index]))) < 1)
 			error(pc);
 		pc->pc_w == (int)ft_strlen(pc->piece[index]) ? 0 : error(pc);
+		if (ft_strchr(pc->piece[index], '*'))
+			cnt++;
 		index++;
 	}
+	cnt > 0 ? 0 : error(pc);
 }
 
 static void	parse_map(t_filler *pc, char *info, int fd)
