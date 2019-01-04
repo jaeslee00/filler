@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 23:03:21 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/04 06:41:42 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/04 07:40:58 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # define OPEN 2147483646
 # define ABOVE 1
 # define BELOW 2
