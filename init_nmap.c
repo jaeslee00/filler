@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 07:40:17 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/04 07:40:21 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/05 05:10:12 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void		init_nmap(t_filler *pc)
 		{
 			if (pc->map[y][x] == '.')
 				pc->nmap[y][x] = OPEN;
-			else if (pc->map[y][x] == pc->me || pc->map[y][x] == pc->me)
+			else if (pc->map[y][x] == pc->me || pc->map[y][x] == pc->me + 32)
 				pc->nmap[y][x] = pc->nbr_me;
-			else if (pc->map[y][x] == pc->op || pc->map[y][x] == pc->op)
+			else if (pc->map[y][x] == pc->op || pc->map[y][x] == pc->op + 32)
 				pc->nmap[y][x] = pc->nbr_op;
 			else
 				error(pc);
