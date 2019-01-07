@@ -1,5 +1,5 @@
 NAME =	libft.a
-SRC =	./ft_atoi.c \
+SRCS =	./ft_atoi.c \
 		./ft_bzero.c \
 		./ft_isalnum.c \
 		./ft_isalpha.c \
@@ -73,21 +73,22 @@ SRC =	./ft_atoi.c \
 		./ft_uitoa_base.c \
 		./ft_strlower.c \
 		./get_next_line.c
-FLAG = -Wall -Wextra -Werror
-OBJ = $(SRC:.c=.o)
-HEADER = -I ./
+CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+OBJS = $(SRCS:.c=.o)
+INCLUDES = -I ./
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJS)
 	ar rc $@ $^
 	ranlib $(NAME)
 
 %.o: %.c
-	gcc $(FLAG) $(HEADER) -c $^ -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 
 fclean: clean libclean
 

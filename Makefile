@@ -6,7 +6,7 @@
 #    By: jaelee <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 00:44:52 by jaelee            #+#    #+#              #
-#    Updated: 2019/01/04 09:54:54 by jaelee           ###   ########.fr        #
+#    Updated: 2019/01/07 03:58:27 by jaelee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,29 +19,31 @@ SRCS = main.c \
 	   ft_atoi_ptr.c \
 	   free_and_error.c
 OBJS = $(SRCS:.c=.o)
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I./ -I./libft
 
 .PHONY: clean fclean re
+.SUFFIXES: .c .o
 
-all : $(NAME)
+all: $(NAME)
 
-$(NAME) : $(OBJS) libft/libft.a
-	gcc -Llibft -lft $^ -o $@
+$(NAME): $(OBJS) libft/libft.a
+	$(CC) -Llibft -lft $^ -o $@
 
-%.o : %.c
-	gcc $(CFLAGS) $(INCLUDES) -c $^ -o $@
+%.o: %.c filler.h libft/libft.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-libft/libft.a :
+libft/libft.a:
 	make -C libft
 
-clean :
+clean:
 	make -C libft clean
 	rm -f $(OBJS)
 
-fclean : clean
+fclean: clean
 	make -C libft libclean
 	rm -f $(NAME)
 
-re : fclean
+re: fclean
 	make all

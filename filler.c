@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 09:52:27 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/04 05:58:02 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/05 16:55:05 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static void	check_piece(t_filler *pc, int map_y, int map_x)
 					pc->nmap[map_y + y][map_x + x] == pc->nbr_me)
 				cnt++;
 			if (pc->piece[y][x] == '*' &&
-					pc->nmap[map_y + y][map_x + x] == pc->nbr_op)
+					(pc->nmap[map_y + y][map_x + x] == pc->nbr_op ||
+					pc->nmap[map_y + y][map_x + x] == pc->nbr_op + 32))
 				return ;
 			x++;
 		}
