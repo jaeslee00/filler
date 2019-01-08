@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 21:23:13 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/05 12:43:20 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/08 21:46:57 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ static void	parse_map(t_filler *pc, char *info, int fd)
 	free(info);
 	if (!(pc->map = ft_memalloc(sizeof(char*) * (pc->map_h + 1))))
 		error(pc);
-	if ((get_next_line(fd, &line)) < 1)
-		error(pc);
+	(get_next_line(fd, &line)) < 1 ? error(pc) : 0;
 	free(line);
 	while (index < pc->map_h)
 	{
-		if ((get_next_line(fd, &line)) < 1)
-			error(pc);
+		(get_next_line(fd, &line)) < 1 ? error(pc) : 0;
+		ft_strlen(line) < 5 ? error(pc) : 0;
 		if (!(pc->map[index] = ft_strdup(line + 4)))
 			error(pc);
 		pc->map_w == (int)ft_strlen(pc->map[index]) ? 0 : error(pc);
