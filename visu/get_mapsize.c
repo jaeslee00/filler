@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 04:12:04 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/09 02:36:54 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/09 11:46:00 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ void	get_mapsize(t_page **t, t_visu *v)
 
 	line = NULL;
 	index = 0;
-	*t = (t_v*)malloc(sizeof(**t));
+	*t = (t_page*)malloc(sizeof(**t));
 	while (index < 9)
 	{
 		if (get_next_line(0, &line))
 			ft_exit(v);
 		free(line);
+		index++;
 	}
 	if (get_next_line(0, &line) < 1)
 		ft_exit(v);
+	free(line);
 	if (ft_strstr(line, "Plateau"))
 	{
 		temp = line;
@@ -43,4 +45,3 @@ void	get_mapsize(t_page **t, t_visu *v)
 		ft_exit(v);
 	}
 }
-

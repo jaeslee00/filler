@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 00:19:46 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/09 09:54:29 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/09 11:13:22 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	draw_grid(t_visu *v)
 int		main(int argc, char *argv[])
 {
 	t_visu		v;
+	t_page		page;
 	int			quit;
 
 
@@ -41,7 +42,7 @@ int		main(int argc, char *argv[])
 	//	begin = t;
 	v.nb_x = 40; //TODO these has to be parsed through stdin
 	v.nb_y = 24;
-	t_page t = {{
+	t_page page = {{
 			"..OOOOOOOOOOOOOOOXXXXXXXXXXXXXXXXXXXXXXX",
 			"..OOOOOOOOOOOOOOOXXXXXXXXXXXXXXXXXXXXXXX",
 			"..OOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXXXXXXXX",
@@ -67,7 +68,7 @@ int		main(int argc, char *argv[])
 			"OOOOOOOOOOOOOOOOOOOOOOOOOXXXXX..........",
 			"OOOOOOOOOOOOOOOOOOOOOOOOOXXX.X.........."
 	}};
-	v.begin = &t;
+	v.begin = &page;
 	get_windowsize(&v);
 	if (!(init_sdl(&v)))
 		printf("Failed to initialize!\n");

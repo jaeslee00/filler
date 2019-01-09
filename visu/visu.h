@@ -6,7 +6,7 @@
 /*   By: jaelee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 08:56:03 by jaelee            #+#    #+#             */
-/*   Updated: 2019/01/09 10:08:10 by jaelee           ###   ########.fr       */
+/*   Updated: 2019/01/09 11:27:49 by jaelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 typedef struct	s_page
 {
-	char	map[24][40];
-//	struct s_page	*next;
-//	struct s_page	*prev;
+	char			**map;
+	struct s_page	*next;
+	struct s_page	*prev;
 }				t_page;
 
 
@@ -43,7 +43,7 @@ typedef struct	s_visu
 	int			origin_y;
 	int			width_line;
 	int			height_line;
-	t_page		*begin; //better turn into address so i don't copy the whole thing.
+	t_page		*begin;
 }				t_visu;
 
 void	get_windowsize(t_visu *v);
