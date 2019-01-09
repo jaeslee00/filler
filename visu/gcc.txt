@@ -1,0 +1,1 @@
+gcc main.c draw_grid.c get_windowsize.c init.c check_piece.c -I ~/.brew/Cellar/sdl2/2.0.9/include/SDL2/ -D_THREAD_SAFE -L ~/.brew/lib/ -lSDL2 -I../libft ../libft/*.c
