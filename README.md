@@ -10,6 +10,11 @@ and each player places a piece to hinder the opponent or occupy strategically im
 To put down a piece, the player have to print the coordinates in the "Y X\n" format on the standard output (stdout).
 The goal of the game is to place more pieces than the opponent.
 
+### Video
+[![](https://img.youtube.com/vi/-wXZzw1TTeo/0.jpg)](https://www.youtube.com/watch?v=-wXZzw1TTeo)
+* player1 is YELLOW
+* player2 is RED
+
 ### installation
 make
 make -C visu
