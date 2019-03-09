@@ -11,7 +11,7 @@ To put down a piece, the player have to print the coordinates in the "Y X\n" for
 The goal of the game is to place more pieces than the opponent.
 
 ### Video
-[![](https://img.youtube.com/vi/-wXZzw1TTeo/0.jpg)](https://www.youtube.com/watch?v=-wXZzw1TTeo)
+![](https://i.imgur.com/X00GduI.gif)
 * player1 is YELLOW
 * player2 is RED
 
